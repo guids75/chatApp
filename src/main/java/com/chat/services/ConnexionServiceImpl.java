@@ -2,6 +2,8 @@ package com.chat.services;
 
 import com.chat.dao.ConnexionDao;
 import com.chat.dao.ConnexionDaoImpl;
+import com.chat.exception.PseudoAlreadyTakenException;
+import com.chat.exception.PseudoTooLongException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,11 @@ public class ConnexionServiceImpl implements ConnexionService {
     @Autowired
     ConnexionDaoImpl connexionDao;
 
-    public String connect(String pseudo) throws Exception {
+    public String connect(String pseudo) throws PseudoTooLongException, PseudoAlreadyTakenException {
         if (pseudo.length() > PSEUDO_SIZE)
-            throw new Exception();
+            throw new PseudoTooLongException("Le pseudo est trop long");
         if (ConnexionDaoImpl.getConnectedPersons().contains(pseudo)) {
-            throw new Exception();
+            throw new PseudoAlreadyTakenException("Le pseudo est deja pris");
         }
         connexionDao.setConnectedPerson(pseudo);
         ConnexionDaoImpl.getConnectedPersons().add(pseudo);
@@ -25,7 +27,8 @@ public class ConnexionServiceImpl implements ConnexionService {
     }
 
     public void disconnect() {
-        ConnexionDaoImpl.getConnectedPersons().remove(connexionDao.getConnectedPerson());
+        String connectedPerson = connexionDao.getConnectedPerson();
+        ConnexionDaoImpl.getConnectedPersons().remove(connectedPerson);
         connexionDao.setConnectedPerson("");
     }
 

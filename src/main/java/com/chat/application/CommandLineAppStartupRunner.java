@@ -1,11 +1,14 @@
 package com.chat.application;
 
+import com.chat.exception.PseudoAlreadyTakenException;
+import com.chat.exception.PseudoTooLongException;
 import com.chat.services.ConnexionService;
 import com.chat.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.print.PrintService;
 import java.util.Scanner;
 
 @Component
@@ -26,8 +29,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     }
 
     private void menu() {
-        System.out.println("Taper \"send\" pour envoyer un message ou \"disconnect\" pour vous déconnecter :");
-        switch(in.nextLine()) {
+        System.out.println("Taper \"send\" pour envoyer un message ou \"disconnect\" pour vous deconnecter :");
+        switch(in.next()) {
             case "send" :
                 send();
                 menu();
@@ -36,28 +39,34 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
                 disconnect();
                 break;
             default :
-                System.out.println("Il semble que le mot tapé soit erronné, veuillez recommencer");
+                System.out.println("Il semble que le mot ne soit pas valide, veuillez recommencer");
                 menu();
                 break;
         }
     }
 
-    private void connect() throws Exception {
-        System.out.println("Veuillez définir votre pseudo (20 caractères maximum) :");
-        Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine();
-        System.out.println(s + "sssss");
-        connexionService.connect(in.next());
-        menu();
+    private void connect() throws PseudoTooLongException, PseudoAlreadyTakenException {
+        System.out.println("Veuillez definir votre pseudo (20 caracteres maximum) :");
+        try {
+            connexionService.connect(in.next());
+            menu();
+        } catch (PseudoTooLongException e) {
+            System.out.println("Ce pseudo est trop long");
+            connect();
+        } catch (PseudoAlreadyTakenException e) {
+            System.out.println("Ce pseudo est deja pris");
+            connect();
+        }
     }
 
     private void disconnect() {
         connexionService.disconnect();
-        in.close();
+       in.close();
     }
 
     private void send() {
-        System.out.println("Veuillez taper le message à envoyer aux autres utilisateurs :");
+        System.out.println("Veuillez taper le message a envoyer aux autres utilisateurs :");
         messageService.sendMessage(in.next());
+        System.out.println("Votre message a bien ete envoye");
     }
 }
