@@ -44,7 +44,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     private void connect() throws Exception {
         System.out.println("Veuillez définir votre pseudo (20 caractères maximum) :");
-        String s = in.nextLine();
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
         System.out.println(s + "sssss");
         connexionService.connect(in.next());
         menu();
