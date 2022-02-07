@@ -1,8 +1,6 @@
-package com.chat.services;
+package com.chat.service;
 
-import com.chat.controller.ConnexionController;
 import com.chat.controller.ConnexionControllerImpl;
-import com.chat.dao.ConnexionDao;
 import com.chat.dao.ConnexionDaoImpl;
 import com.chat.exception.PseudoAlreadyTakenException;
 import com.chat.exception.PseudoTooLongException;
@@ -28,7 +26,7 @@ public class ConnexionServiceImpl implements ConnexionService {
         }
         connexionDao.setConnectedPerson(pseudo);
         ConnexionDaoImpl.getConnectedPersons().add(pseudo);
-        connexionController.newConnexionAlert(pseudo);
+        //connexionController.newConnexionAlert(pseudo);
         return pseudo;
     }
 

@@ -1,4 +1,4 @@
-package com.chat.services;
+package com.chat.service;
 
 import com.chat.exception.PseudoAlreadyTakenException;
 import com.chat.exception.PseudoTooLongException;

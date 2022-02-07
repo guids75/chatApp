@@ -1,4 +1,4 @@
-package com.chat.services;
+package com.chat.service;
 
 import com.chat.controller.MessageControllerImpl;
 import com.chat.dao.ConnexionDaoImpl;

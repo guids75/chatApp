@@ -2,8 +2,8 @@ package com.chat.application;
 
 import com.chat.exception.PseudoAlreadyTakenException;
 import com.chat.exception.PseudoTooLongException;
-import com.chat.services.ConnexionService;
-import com.chat.services.MessageService;
+import com.chat.service.ConnexionService;
+import com.chat.service.MessageService;
 import com.chat.websocket.ServerMessageWebSocket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -20,7 +20,7 @@ public class ConnexionLogger {
     private static String LOG_PATH = "C:/Users/GUIDS/Documents/chat/src/main/resources/logs/log"
                     + format.format(new Date()) + ".txt";
 
-    @Pointcut("within(com.chat.services.ConnexionServiceImpl)")
+    @Pointcut("within(com.chat.service.ConnexionServiceImpl)")
     public void connexionPointcut() {
     }
 
