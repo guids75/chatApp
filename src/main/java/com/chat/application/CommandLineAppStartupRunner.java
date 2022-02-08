@@ -31,11 +31,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     @Override
     public void run(String...args) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-        try {
-            container.connectToServer(ServerMessageWebSocket.class, new URI("ws://localhost:8080"));
-        } catch (DeploymentException | URISyntaxException | IOException e) {
-            System.out.println("Problem encountered : " + e);
-        }
         in = new Scanner(System.in);
         connect();
     }

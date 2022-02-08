@@ -15,9 +15,6 @@ public class ConnexionServiceImpl implements ConnexionService {
     @Autowired
     ConnexionDaoImpl connexionDao;
 
-    @Autowired
-    ConnexionControllerImpl connexionController;
-
     public String connect(String pseudo) throws PseudoTooLongException, PseudoAlreadyTakenException {
         if (pseudo.length() > PSEUDO_SIZE)
             throw new PseudoTooLongException("Le pseudo est trop long");
@@ -26,7 +23,6 @@ public class ConnexionServiceImpl implements ConnexionService {
         }
         connexionDao.setConnectedPerson(pseudo);
         ConnexionDaoImpl.getConnectedPersons().add(pseudo);
-        //connexionController.newConnexionAlert(pseudo);
         return pseudo;
     }
 
